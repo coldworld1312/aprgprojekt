@@ -18,13 +18,15 @@ const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
 //init datenbank
-const DATABASE = "math.db"; // Pfad der Datenbankdatei
+const DATABASE = "math.db"; 
 const db = require("better-sqlite3")(DATABASE);
 
 //init sessions
 const session = require('express-session'); 
 app.use(session({
-    secret: 'example', resave: false, saveUninitialized: true
+    secret: 'example', 
+    resave: false, 
+    saveUninitialized: true
 }));
 
 
@@ -35,7 +37,11 @@ app.listen(666,function(){
 
 //home
 app.get("/home",function(req,res){
+    let counter = parseInt(req.cookies['counter']) || 0;
+    const maxAge = 3600*1000; // one hour 
+    res.cookie('counter' , counter + 1, {'maxAge': maxAge});
     res.render("home");
+    //console.log(counter)
 })
 
 //login
@@ -47,8 +53,9 @@ app.post("/login",function(req,res){
 app.post("/logintry",function(req,res){
     const username = req.body["userName"];
     const userpassword=req.body["userPassword"];
-    
     const rows = db.prepare('SELECT userpassword FROM users WHERE username = ?').all(username);
+    const sessionName = req.body["userName"]
+
 if (rows.length === 0) {
     res.render("login")
 } 
@@ -56,10 +63,19 @@ else {
   const hash = rows[0].userpassword;
   const check = bcrypt.compareSync(userpassword,hash)
   if(check==true){
-    //res.cookie('counter' , counter + 1, {'maxAge': maxAge});
-    req.session['sessionValue'] = Math.floor(Math.random(100)*100);
-
-    res.render("userHome")
+    req.session.sessionValue = sessionName;
+   
+    //session lesen
+    if (!req.session.sessionValue){
+        //session nicht gesetzt
+        res.render("sessionFail")
+    }
+    else{
+        //sesion gesetzt
+        console.log(req.session)
+        res.render("userHome")
+    }
+  
   } 
   if(check==false){
     res.render("loginFail")
@@ -70,12 +86,32 @@ else {
 
 //select
 app.post("/select",function(req,res){
-    res.render("select");
+     //session lesen
+     if (!req.session.sessionValue){
+        //session nicht gesetzt
+        res.render("sessionFail")
+    }
+    else{
+        //sesion gesetzt
+        res.render("select");
+    }
+    
+    
 });
 
 //stats
 app.post("/stats",function(req,res){
-    res.render("stats");
+         //session lesen
+         if (!req.session.sessionValue){
+            //session nicht gesetzt
+            res.render("sessionFail")
+        }
+        else{
+            //sesion gesetzt
+            res.render("stats");
+        }
+
+    
 });
 
 //adduser
@@ -111,8 +147,19 @@ app.post("/newUser",function(req,res){
     
 });
 
+//Logout
+app.post("/logout",function(req,res){
+    
+    req.session.destroy();
+    
+    res.redirect("/home");
+});
+
 //zurück zu home
 app.post("/home",function(req,res){
+    console.log(req.session)
     res.render("home")
 })
+
+
 
