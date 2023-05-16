@@ -8,18 +8,22 @@ CREATE TABLE users(
     rightAnswers TEXT,
     wrongAnswers TEXT
 );
-
 CREATE TABLE aufgaben(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     kapitel INTEGER,
-    aufgabe TEXT NOT NULL UNIQUE,
+    aufgabe TEXT,
     lösung INTEGER,
     python BOOL,
-    kopfrechnen BOOL,
-    
+    kopfrechnen BOOL
 );
 
 INSERT INTO users (username, userpassword) VALUES ("lion","lion");
 
-INSERT INTO aufgaben (kapitel,aufgabe.lösong,python,kopfrechnen)
-VALUES(1,"")
+INSERT INTO aufgaben (kapitel,aufgabe,lösung,python,kopfrechnen)
+VALUES(1,"Geben sie die Summe der ersten 100 ungeraden Zahlen an.",10000,true,true);
+
+INSERT INTO aufgaben (kapitel,aufgabe,lösung,python,kopfrechnen)
+VALUES(1,"geben sie die Summe der ersten 50 natürlichen Zahlen an, die größer als 200 sind.",11526,true,true);
+
+INSERT INTO aufgaben (kapitel,aufgabe,lösung,python,kopfrechnen)
+VALUES(2,"Konvertieren sie die Zahl 1234567 in das Siebenersystem",13331215,true, true);
