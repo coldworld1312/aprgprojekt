@@ -25,5 +25,5 @@ VALUES(1,"Geben sie die Summe der ersten 100 ungeraden Zahlen an.",10000,true,tr
 INSERT INTO aufgaben (kapitel,aufgabe,lösung,python,kopfrechnen)
 VALUES(1,"geben sie die Summe der ersten 50 natürlichen Zahlen an, die größer als 200 sind.",11526,true,true);
 
-INSERT INTO aufgaben (kapitel,aufgabe,lösung,python,kopfrechnen)
+INSERT INTO aufgaben (kapitel,aufgabe,lösung,python,kopfrechnen)jgfj
 VALUES(2,"Konvertieren sie die Zahl 1234567 in das Siebenersystem",13331215,true, true);
