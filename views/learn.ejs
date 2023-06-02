@@ -2,7 +2,23 @@
 <html>
     <h1>testinggggg</h1>
 
-    <%=aufgaben
-    %>
-    jsoifj
+        <%let lösungenListe = []%>  
+        <p>
+            
+            <form action="/auswertung" method="post">
+                <%for(let i = 0; i < aufgaben.length; i++){
+                    lösungenListe.push(aufgaben.lösung)
+                    %>
+                <p><%=aufgaben[i].aufgabe%> <br></p>
+                <input type="text" id="<%[i]%>" name="antwort">
+                <%
+            }
+            %>
+            <br>
+            <button type="submit">Abschicken</button>
+            </form>
+        </p>
+   
+  
+    
 </html>

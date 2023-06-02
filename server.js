@@ -116,22 +116,62 @@ app.post("/stats",function(req,res){
 
 //learn
 app.post("/learn",function(req,res){
+
+    const listeKapitel = req.body["kapitel"];
+    const aufgabenart = req.body["aufgabenart"];
+
+    let listeKapitelInt = []
+    for (let i = 0; i<listeKapitel.length; i++)
+    {
+        listeKapitelInt.push(Number(listeKapitel[i]));
+    }
+
     //session lesen
     if (!req.session.sessionValue){
        //session nicht gesetzt
        res.render("sessionFail")
-
-       
-       
    }
-
+   
    else{
+       let liste = listeKapitelInt.toString();
+       console.log("HIER LISTE MAN: " + liste)
+       let rows = null;
        //sesion gesetzt
-       const rows = db.prepare("SELECT * FROM Aufgaben");
+       //const rows = db.prepare('SELECT * FROM aufgaben' ).all();
+       if(aufgabenart.includes("python") && aufgabenart.includes("kopfrechnen"))  
+       {
+            console.log("DAS KLAPPT SCHONMAL")
+            //const rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste +");").all();
+            rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ")").all();
+            
+       }
+       else if(aufgabenart.includes("python") && !(aufgabenart.includes("kopfrechnen")))
+       {
+            rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ') AND python == True').all();
+       }
+       else
+       {
+            rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ') AND kopfrechnen == True').all();  
+       }
+       console.log(rows)
        res.render("learn", {aufgaben : rows});
    }
+});
 
+app.post("/auswertung",function(req,res){
 
+    //session lesen
+    if (!req.session.sessionValue){
+       //session nicht gesetzt
+       res.render("sessionFail")
+   }
+   else{
+       //sesion gesetzt
+       lösungenListe = req.body["lösungenListe"];
+       const antwortenListe = req.body["antwort"];
+       console.log(lösungenListe + "\n" + antwortenListe)
+       res.render("auswertung", {lösungen : lösungenListe, antworten : antwortenListe});
+   }
 });
 
 //adduser
