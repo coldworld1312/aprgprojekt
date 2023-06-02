@@ -114,6 +114,26 @@ app.post("/stats",function(req,res){
     
 });
 
+//learn
+app.post("/learn",function(req,res){
+    //session lesen
+    if (!req.session.sessionValue){
+       //session nicht gesetzt
+       res.render("sessionFail")
+
+       
+       
+   }
+
+   else{
+       //sesion gesetzt
+       const rows = db.prepare("SELECT * FROM Aufgaben");
+       res.render("learn", {aufgaben : rows});
+   }
+
+
+});
+
 //adduser
 app.post("/addUser",function(req,res){
     res.render("addUser");
