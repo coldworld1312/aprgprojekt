@@ -44,6 +44,10 @@ app.get("/home",function(req,res){
     //console.log(counter)
 })
 
+app.get("/testing",function(req,res){
+    res.render("testing")
+});
+
 //login
 app.post("/login",function(req,res){
     res.render("login");
@@ -134,13 +138,13 @@ app.post("/learn",function(req,res){
    
    else{
        let liste = listeKapitelInt.toString();
-       console.log("HIER LISTE MAN: " + liste)
+       //console.log("HIER LISTE MAN: " + liste)
        let rows = null;
        //sesion gesetzt
        //const rows = db.prepare('SELECT * FROM aufgaben' ).all();
        if(aufgabenart.includes("python") && aufgabenart.includes("kopfrechnen"))  
        {
-            console.log("DAS KLAPPT SCHONMAL")
+            //console.log("DAS KLAPPT SCHONMAL")
             //const rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste +");").all();
             rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ")").all();
             
@@ -153,7 +157,7 @@ app.post("/learn",function(req,res){
        {
             rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ') AND kopfrechnen == True').all();  
        }
-       console.log(rows)
+       //console.log(rows)
        res.render("learn", {aufgaben : rows});
    }
 });
@@ -167,10 +171,20 @@ app.post("/auswertung",function(req,res){
    }
    else{
        //sesion gesetzt
-       lösungenListe = req.body["lösungenListe"];
+       //const lösungenListe = req.body.lösungenListe;
        const antwortenListe = req.body["antwort"];
-       console.log(lösungenListe + "\n" + antwortenListe)
-       res.render("auswertung", {lösungen : lösungenListe, antworten : antwortenListe});
+
+       const test = req.body["testfeld"];
+       
+       
+       //console.log("TYPE" + typeof antwortenListe);
+       //console.log("CONSTRUCTORE" + antwortenListe.constructor)
+       //console.log("LEN " + antwortenListe.length)
+       //console.log("LÖSUNGEN " + lösungenListe)
+       //console.log("CONSTRUCTOR " + lösungenListe.constructor)
+       
+
+       res.render("auswertung", {antworten : antwortenListe});
    }
 });
 

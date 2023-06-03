@@ -1,24 +1,100 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
+    <body>
     <h1>testinggggg</h1>
-
-        <%let lösungenListe = []%>  
         <p>
             
             <form action="/auswertung" method="post">
+                <!-- <%const lösungenListe = []%>
                 <%for(let i = 0; i < aufgaben.length; i++){
-                    lösungenListe.push(aufgaben.lösung)
+                lösungenListe.push(aufgaben[i].lösung)
+                }
+                %> 
+                <%for(let i = 0; i < aufgaben.length; i++){
                     %>
                 <p><%=aufgaben[i].aufgabe%> <br></p>
-                <input type="text" id="<%[i]%>" name="antwort">
+                <p><%=aufgaben[i].lösung%> <br></p>
+                
+                <input type="text" id="<%=i%>" name="antwort">
                 <%
             }
             %>
             <br>
+            
             <button type="submit">Abschicken</button>
             </form>
         </p>
-   
+    </body>
   
     
+</html>
+-->
+<!DOCTYPE html>
+<input type="text" id="test">
+<input type="button" value="click" onclick="z()"><span id="err"></span>
+
+<script>
+function z()
+{
+var a=document.getElementById("test");
+if((a.value=="an apple")||(a.value=="apple"))
+{
+document.getElementById('err').innerHTML= 'correct';
+}
+else
+{
+document.getElementById('err').innerHTML= 'wrong';
+
+}
+
+}
+</script>
+<html>
+  <body>
+    <p id="testID"></p>
+    <%for(let i = 0; i < aufgaben.length; i++)
+    {
+    %>
+        <p><%=aufgaben[i].aufgabe%> <br></p>
+        <!--<p><%=aufgaben[i].lösung%> <br></p>-->
+        <input type="text" id="<%=i%>" name="antwort"> 
+        <%const demo_id = i + "_demo"
+        console.log(demo_id)%>
+        
+        <p id="<%=demo_id%>"></p>
+    <%
+    }
+    %>
+    <button onclick="myFunction()">Klicken!</button>
+
+
+    <script>
+    function myFunction() {
+        console.log(document.getElementById(0).value);
+        console.log("t")
+        //document.getElementById("0_demo").innerHTML = "falsch";
+        //console.log(aufgaben.length)
+        //document.getElementById("1_demo").innerHTML = "richtig";
+
+        
+        for(let i = 0; i < 2; i++)
+        {
+            i = document.getElementById(i).value
+            console.log("ja")
+
+            if(i == aufgaben[i].lösung){
+            //document.getElementById.style.backroundcolour = "green";
+            console.log("richtig")
+            document.getElementById(i+"_demo").innerHTML = "richtig";
+            }
+        else{
+            //document.getElementById.style.backroundcolour = "red";
+            console.log("falsch")
+            document.getElementById(i+"_demo").innerHTML = "falsch";
+            } 
+        }
+        
+      }
+    </script>
+  </body>
 </html>
