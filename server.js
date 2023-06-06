@@ -163,7 +163,6 @@ app.post("/learn",function(req,res){
 });
 
 app.post("/auswertung",function(req,res){
-
     //session lesen
     if (!req.session.sessionValue){
        //session nicht gesetzt
@@ -171,21 +170,50 @@ app.post("/auswertung",function(req,res){
    }
    else{
        //sesion gesetzt
-       //const lösungenListe = req.body.lösungenListe;
-       const antwortenListe = req.body["antwort"];
+       const anzahlAufgaben = req.body["anzahlAufgaben"]
 
-       const test = req.body["testfeld"];
-       
-       
-       //console.log("TYPE" + typeof antwortenListe);
-       //console.log("CONSTRUCTORE" + antwortenListe.constructor)
-       //console.log("LEN " + antwortenListe.length)
-       //console.log("LÖSUNGEN " + lösungenListe)
-       //console.log("CONSTRUCTOR " + lösungenListe.constructor)
-       
+       const aufgabenListe = []
+       const benutzerAntwortenListe = []
+       const lösungenListe = []
+       const richtigListe = []
 
-       res.render("auswertung", {antworten : antwortenListe});
+       for(let i = 0; i < anzahlAufgaben; i++){
+            const aufgaben_id = req.body["aufgabe_id_"+i]
+            console.log(aufgaben_id)
+
+            const aufgabenzeile = db.prepare('select * from aufgaben where id='+aufgaben_id).all()[0]
+            
+            console.log(aufgabenzeile)
+            console.log(aufgabenzeile.kopfrechnen)
+            
+
+            if(aufgabenzeile == null){
+                console.log("unexpected error, aufgabe id does not exist")
+                continue
+            }
+            const benutzerAntwort = req.body["benutzerAntwort_"+i]
+            aufgabenListe.push(aufgabenzeile.aufgabe)
+            benutzerAntwortenListe .push(benutzerAntwort)
+            
+            lösungenListe.push(aufgabenzeile.lösung)
+
+            if(aufgabenzeile.lösung == benutzerAntwort)
+            {
+                console.log("true")
+                richtigListe.push("Richtig.")
+            }
+            else{
+                console.log("false")
+                richtigListe.push("Falsch.")
+            }
+            
+       }
+       //übergabe der aufgabe, der richtigen lösung, der benutzerantwort und ob richtig oder falsch
+       res.render("auswertung", {aufgaben : aufgabenListe, lösungen : lösungenListe, benutzerAntworten : benutzerAntwortenListe, richtig : richtigListe});
+
    }
+
+
 });
 
 //adduser

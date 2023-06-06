@@ -1,17 +1,22 @@
 <!DOCTYPE html>
 <html>
-    <h1>auswertung</h1>
-    <%for(let i = 0; i < lösungen.length; i++){
-        if(antworten[i] == lösungen[i]){
+    <body>
+        
+        <%for(let i = 0; i < aufgaben.length; i++){
             %>
-            <p>richtig</p>
+            <p>Aufgabe <%=i+1%>: <%=aufgaben[i]%> <br>
+            Ihre Antwort:<%=benutzerAntworten[i]%> <br>
+            Ihre Antwort ist <%=richtig[i]%> <br>
+            <%if(richtig[i]==="Falsch."){
+                %><p>Die richtige Antwort ist: <%=lösungen[i]%></p>
+                <%
+            }
+            %>
+            </p>
             <%
         }
-        else{
-            %>
-            <p>falsch</p> 
-        <%
-        }}%>
+        %>
+    </body>
         
 
 </html>
