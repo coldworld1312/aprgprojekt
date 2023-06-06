@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        
+        <%for(let i = 0; i < aufgaben.length; i++){
+            %>
+            <p>Aufgabe <%=i+1%>: <%=aufgaben[i]%> <br>
+            Ihre Antwort:<%=benutzerAntworten[i]%> <br>
+            Ihre Antwort ist <%=richtig[i]%> <br>
+            <%if(richtig[i]==="Falsch."){
+                %><p>Die richtige Antwort ist: <%=lösungen[i]%></p>
+                <%
+            }
+            %>
+            </p>
+            <%
+        }
+        %>
+    </body>
+        
+
+</html>
+

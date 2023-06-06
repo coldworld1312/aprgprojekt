@@ -1,0 +1,51 @@
+<!-- <!DOCTYPE html>
+<html>
+    <body>
+    <h1>testinggggg</h1>
+        <p>
+            
+            <form action="/auswertung" method="post">
+                <%const lösungenListe = []%>
+                <%for(let i = 0; i < aufgaben.length; i++){
+                lösungenListe.push(aufgaben[i].lösung)
+                }
+                %> 
+                <%for(let i = 0; i < aufgaben.length; i++){
+                    %>
+                <p><%=aufgaben[i].aufgabe%> <br></p>
+                <p><%=aufgaben[i].lösung%> <br></p>
+                
+                <input type="text" id="<%=i%>" name="antwort">
+                <%
+            }
+            %>
+            <br>
+            
+            <button type="submit">Abschicken</button>
+            </form>
+        </p>
+    </body>
+  
+    
+</html>
+-->
+<!DOCTYPE html>
+    <body>
+        <form action="/auswertung" method="post">
+        <%for(let i = 0; i < aufgaben.length; i++){
+            %>
+            <p><%=aufgaben[i].aufgabe%> <br></p>
+            <input type="text" name="benutzerAntwort_<%=i%>">
+            <input type="hidden" name="aufgabe_id_<%=i%>" value="<%=aufgaben[i].id%>">
+
+            <%
+            }
+            %>
+            <input type="hidden" name="anzahlAufgaben" value="<%=aufgaben.length%>">
+            <button type="submit">Abgeben</button>
+        </form>
+    </body>
+ 
+   
+
+</html>

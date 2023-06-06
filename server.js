@@ -44,6 +44,10 @@ app.get("/home",function(req,res){
     //console.log(counter)
 })
 
+app.get("/testing",function(req,res){
+    res.render("testing")
+});
+
 //login
 app.post("/login",function(req,res){
     res.render("login");
@@ -112,6 +116,104 @@ app.post("/stats",function(req,res){
         }
 
     
+});
+
+//learn
+app.post("/learn",function(req,res){
+
+    const listeKapitel = req.body["kapitel"];
+    const aufgabenart = req.body["aufgabenart"];
+
+    let listeKapitelInt = []
+    for (let i = 0; i<listeKapitel.length; i++)
+    {
+        listeKapitelInt.push(Number(listeKapitel[i]));
+    }
+
+    //session lesen
+    if (!req.session.sessionValue){
+       //session nicht gesetzt
+       res.render("sessionFail")
+   }
+   
+   else{
+       let liste = listeKapitelInt.toString();
+       //console.log("HIER LISTE MAN: " + liste)
+       let rows = null;
+       //sesion gesetzt
+       //const rows = db.prepare('SELECT * FROM aufgaben' ).all();
+       if(aufgabenart.includes("python") && aufgabenart.includes("kopfrechnen"))  
+       {
+            //console.log("DAS KLAPPT SCHONMAL")
+            //const rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste +");").all();
+            rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ")").all();
+            
+       }
+       else if(aufgabenart.includes("python") && !(aufgabenart.includes("kopfrechnen")))
+       {
+            rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ') AND python == True').all();
+       }
+       else
+       {
+            rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ') AND kopfrechnen == True').all();  
+       }
+       //console.log(rows)
+       res.render("learn", {aufgaben : rows});
+   }
+});
+
+app.post("/auswertung",function(req,res){
+    //session lesen
+    if (!req.session.sessionValue){
+       //session nicht gesetzt
+       res.render("sessionFail")
+   }
+   else{
+       //sesion gesetzt
+       const anzahlAufgaben = req.body["anzahlAufgaben"]
+
+       const aufgabenListe = []
+       const benutzerAntwortenListe = []
+       const lösungenListe = []
+       const richtigListe = []
+
+       for(let i = 0; i < anzahlAufgaben; i++){
+            const aufgaben_id = req.body["aufgabe_id_"+i]
+            console.log(aufgaben_id)
+
+            const aufgabenzeile = db.prepare('select * from aufgaben where id='+aufgaben_id).all()[0]
+            
+            console.log(aufgabenzeile)
+            console.log(aufgabenzeile.kopfrechnen)
+            
+
+            if(aufgabenzeile == null){
+                console.log("unexpected error, aufgabe id does not exist")
+                continue
+            }
+            const benutzerAntwort = req.body["benutzerAntwort_"+i]
+            aufgabenListe.push(aufgabenzeile.aufgabe)
+            benutzerAntwortenListe .push(benutzerAntwort)
+            
+            lösungenListe.push(aufgabenzeile.lösung)
+
+            if(aufgabenzeile.lösung == benutzerAntwort)
+            {
+                console.log("true")
+                richtigListe.push("Richtig.")
+            }
+            else{
+                console.log("false")
+                richtigListe.push("Falsch.")
+            }
+            
+       }
+       //übergabe der aufgabe, der richtigen lösung, der benutzerantwort und ob richtig oder falsch
+       res.render("auswertung", {aufgaben : aufgabenListe, lösungen : lösungenListe, benutzerAntworten : benutzerAntwortenListe, richtig : richtigListe});
+
+   }
+
+
 });
 
 //adduser
