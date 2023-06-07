@@ -6,7 +6,7 @@
     <body>
         <h1>Bitte Wählen sie</h1>
         <form action="/learn" method="post">
-            Anzahl der Aufgaben: <input type="number"><br>
+            Anzahl der Aufgaben: <input type="number" name="anzahl_der_aufgaben"><br>
             Kapitel: <br>
             <input type="checkbox" id="1" name="kapitel" value="1">
             <label for="1">1</label>
@@ -48,8 +48,9 @@
             <label for="17">17</label><br>
             
             Art: <input type="checkbox" id="python" name="python" value="true">python
-            <input type="checkbox" id="kopfrechnen" name="kopfrechnen" value="true">kopfrechnen
+            <input type="checkbox" id="kopfrechnen" name="kopfrechnen" value="true">kopfrechnen<br>
 
+            <button type="submit">auswahl bestätigen</button>
         </form>
         
         

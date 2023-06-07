@@ -162,4 +162,68 @@ app.post("/home",function(req,res){
 })
 
 
+// learn
+app.post("/learn", function (req, res) {
+    var anzahlAufgaben = 1
+    console.log(parseInt(req.body.anzahl_der_aufgaben))
+    if(parseInt(req.body.anzahl_der_aufgaben)>=1){
+        anzahlAufgaben = parseInt(req.body.anzahl_der_aufgaben);
+    }
+    else{
+        var anzahlAufgaben = 1
+    }
+    var ausgewaehlteKapitel = Array.from(req.body.kapitel).map(Number).filter(function (value) {
+      return Number.isInteger(value);
+    });
+    var ausgewaehlteArt = [];
+    console.log(anzahlAufgaben)
 
+    if (req.body.python === "true") {
+      ausgewaehlteArt.push("python");
+    }
+  
+    if (req.body.kopfrechnen === "true") {
+      ausgewaehlteArt.push("kopfrechnen");
+    }
+  
+    var aufgabenListe = [];
+    if (ausgewaehlteKapitel.length > 0 || ausgewaehlteArt.length > 0) {
+      if (ausgewaehlteArt.every(function (art) {
+        return typeof art === "string" && art.trim().length > 0;
+      })) {
+        var sql = "SELECT * FROM aufgaben";
+  
+        if (ausgewaehlteKapitel.length > 0) {
+          sql += " WHERE kapitel IN (" + ausgewaehlteKapitel.join(",") + ")";
+        }
+  
+        if (ausgewaehlteArt.length > 0) {
+          if (ausgewaehlteKapitel.length > 0) {
+            sql += " AND";
+          } else {
+            sql += " WHERE";
+          }
+  
+          sql += " (" + ausgewaehlteArt.map(function (art) {
+            return art + " = 1";
+          }).join(" OR ") + ")";
+        }
+  
+        sql += " ORDER BY RANDOM() LIMIT " + anzahlAufgaben;
+        
+        //console.log(sql)
+
+        var rows = db.prepare(sql).all();
+
+        res.render("work",{aufgaben: rows});
+
+        console.log()
+        // Rest des Codes...
+      } else {
+        res.send("Ungültige Werte in ausgewaehlteArt.");
+      }
+    } else {
+      res.send("Es wurden keine ausgewählten Kapitel oder Arten angegeben.");
+    }
+  });
+  

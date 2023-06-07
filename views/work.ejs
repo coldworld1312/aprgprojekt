@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DO Your Job!</title>
+</head>
+<body>
+    <h1>Zufällig ausgewählte Aufgaben</h1>
+    <ul>
+        <% aufgaben.forEach(function(aufgabe) { %>
+            <li>
+                <h3>Aufgabe ID: <%= aufgabe.id %></h3>
+                <p><strong>Kapitel:</strong> <%= aufgabe.kapitel %></p>
+                <p><strong>Aufgabe:</strong> <%= aufgabe.aufgabe %></p>
+                <p><details>
+                    <summary>lösung</summary>
+                    <p><%= aufgabe.lösung %></p>
+                  </details>
+                   
+                
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>
