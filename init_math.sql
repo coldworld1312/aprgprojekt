@@ -26,4 +26,26 @@ INSERT INTO aufgaben (kapitel,aufgabe,lösung,python,kopfrechnen)
 VALUES(1,"geben sie die Summe der ersten 50 natürlichen Zahlen an, die größer als 200 sind.",11526,false,true);
 
 INSERT INTO aufgaben (kapitel,aufgabe,lösung,python,kopfrechnen)
+VALUES(1,"Konvertieren sie die Zahl 1234567 in das Siebenersystem",13331215,true, true);
+
+INSERT INTO aufgaben (kapitel,aufgabe,lösung,python,kopfrechnen)
+VALUES(1,"Konvertieren sie die Zahl 1234567 in das Siebenersystem",13331215,true, true);
+
+INSERT INTO aufgaben (kapitel,aufgabe,lösung,python,kopfrechnen)
+VALUES(1,"Konvertieren sie die Zahl 1234567 in das Siebenersystem",13331215,true, true);
+
+
+INSERT INTO aufgaben (kapitel,aufgabe,lösung,python,kopfrechnen)
 VALUES(2,"Konvertieren sie die Zahl 1234567 in das Siebenersystem",13331215,true, true);
+
+INSERT INTO aufgaben (kapitel,aufgabe,lösung,python,kopfrechnen)
+VALUES(3,"Konvertieren sie die Zahl 1234567 in das Siebenersystem",13331215,true, true);
+
+INSERT INTO aufgaben (kapitel,aufgabe,lösung,python,kopfrechnen)
+VALUES(4,"Konvertieren sie die Zahl 1234567 in das Siebenersystem",13331215,true, true);
+
+INSERT INTO aufgaben (kapitel,aufgabe,lösung,python,kopfrechnen)
+VALUES(3,"Konvertieren sie die Zahl 1234567 in das Siebenersystem",13331215,true, true);
+
+
+

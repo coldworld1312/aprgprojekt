@@ -1,9 +1,15 @@
 <!DOCTYPE html>
 <html>
     <body>
-        
-        <%for(let i = 0; i < aufgaben.length; i++){
+        <h1>Auswertung</h1>
+        <%
+        let richtigeAntworten = 0;
+        for(let i = 0; i < aufgaben.length; i++){
+            if(richtig[i] === "Richtig."){
+                richtigeAntworten += 1;
+            }
             %>
+
             <p>Aufgabe <%=i+1%>: <%=aufgaben[i]%> <br>
             Ihre Antwort:<%=benutzerAntworten[i]%> <br>
             Ihre Antwort ist <%=richtig[i]%> <br>
@@ -13,11 +19,23 @@
             }
             %>
             </p>
+            
             <%
         }
         %>
-    </body>
         
+        <p>Punkte: <%=richtigeAntworten%>/<%=aufgaben.length%></p>
 
+        <form action="/select" method = "post">
+            <button type="submit">Neuer Test</button>
+        </form>
+
+        <form action="/logOut" method="post">
+            <button type="submit">Log out</button>
+        </form>
+
+      
+
+    </body>      
 </html>
 

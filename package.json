@@ -20,5 +20,6 @@
     "npm": "^9.6.6",
     "save": "^2.9.0"
   },
+  "devDependencies": {},
   "description": ""
 }

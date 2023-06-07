@@ -98,31 +98,17 @@ app.post("/select",function(req,res){
     else{
         //sesion gesetzt
         res.render("select");
-    }
-    
-    
+    }   
 });
 
-//stats
-app.post("/stats",function(req,res){
-         //session lesen
-         if (!req.session.sessionValue){
-            //session nicht gesetzt
-            res.render("sessionFail")
-        }
-        else{
-            //sesion gesetzt
-            res.render("stats");
-        }
-
-    
-});
 
 //learn
 app.post("/learn",function(req,res){
 
     const listeKapitel = req.body["kapitel"];
     const aufgabenart = req.body["aufgabenart"];
+    const anzahlAufgaben = req.body["anzahlAufgaben"]
+    console.log(anzahlAufgaben)
 
     let listeKapitelInt = []
     for (let i = 0; i<listeKapitel.length; i++)
@@ -157,8 +143,22 @@ app.post("/learn",function(req,res){
        {
             rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ') AND kopfrechnen == True').all();  
        }
+
+       let finalRows = []
+       
+       for(let i = 0; i < anzahlAufgaben; i++){
+        
+            let rand = Math.floor(Math.random()*rows.length);
+            console.log("ROWS",rows)
+            console.log("RANDOM",rand)
+        
+            console.log("ausgewähltes Element: ", rows[rand])
+            finalRows.push(rows[rand])
+            rows.splice(rand,1)
+       }
+       
        //console.log(rows)
-       res.render("learn", {aufgaben : rows});
+       res.render("learn", {aufgaben : finalRows});
    }
 });
 
@@ -170,8 +170,8 @@ app.post("/auswertung",function(req,res){
    }
    else{
        //sesion gesetzt
+       
        const anzahlAufgaben = req.body["anzahlAufgaben"]
-
        const aufgabenListe = []
        const benutzerAntwortenListe = []
        const lösungenListe = []
