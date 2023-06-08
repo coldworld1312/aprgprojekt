@@ -53,6 +53,7 @@ app.post("/login",function(req,res){
     res.render("login");
 });
 
+
 //logintry
 app.post("/logintry",function(req,res){
     const username = req.body["userName"];
@@ -100,67 +101,84 @@ app.post("/select",function(req,res){
         res.render("select");
     }   
 });
+app.post("/userHome", function(req,res){
+    if (!req.session.sessionValue){
+    //session nicht gesetzt
+    res.render("sessionFail")
+}
 
+else{
+    res.render("userHome");
+}
+}
+);
 
 //learn
 app.post("/learn",function(req,res){
-
+    
     const listeKapitel = req.body["kapitel"];
     const aufgabenart = req.body["aufgabenart"];
     const anzahlAufgaben = req.body["anzahlAufgaben"]
     console.log(anzahlAufgaben)
 
-    let listeKapitelInt = []
-    for (let i = 0; i<listeKapitel.length; i++)
-    {
-        listeKapitelInt.push(Number(listeKapitel[i]));
-    }
+    if(listeKapitel != null && aufgabenart != null){
+        let listeKapitelInt = []
+        for (let i = 0; i<listeKapitel.length; i++)
+        {
+            listeKapitelInt.push(Number(listeKapitel[i]));
+        }
 
-    //session lesen
-    if (!req.session.sessionValue){
-       //session nicht gesetzt
-       res.render("sessionFail")
-   }
-   
-   else{
-       let liste = listeKapitelInt.toString();
-       //console.log("HIER LISTE MAN: " + liste)
-       let rows = null;
-       //sesion gesetzt
-       //const rows = db.prepare('SELECT * FROM aufgaben' ).all();
-       if(aufgabenart.includes("python") && aufgabenart.includes("kopfrechnen"))  
-       {
-            //console.log("DAS KLAPPT SCHONMAL")
-            //const rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste +");").all();
-            rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ")").all();
+        //session lesen
+        if (!req.session.sessionValue){
+        //session nicht gesetzt
+        res.render("sessionFail")
+        }
+    
+        else{
+        
+        let liste = listeKapitelInt.toString();
+        console.log("KAPITELLISTE",liste)
+
+        let rows = null;
+        
+        
+                if(aufgabenart.includes("python") && aufgabenart.includes("kopfrechnen"))  
+                {
+                        rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ")").all();  
+                }
+                else if(aufgabenart.includes("python") && !(aufgabenart.includes("kopfrechnen")))
+                {
+                        rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ') AND python == True').all();
+                }
+                else
+                {
+                        rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ') AND kopfrechnen == True').all();  
+                }
+
+                let finalRows = []
+                
+                for(let i = 0; i < anzahlAufgaben; i++){
+                    
+                        let rand = Math.floor(Math.random()*rows.length);
+                        console.log("ROWS",rows)
+                        console.log("RANDOM",rand)
+                    
+                        console.log("ausgewähltes Element: ", rows[rand])
+                        finalRows.push(rows[rand])
+                        rows.splice(rand,1)
+                }
+                
+                //console.log(rows)
+                res.render("learn", {aufgaben : finalRows});
+            }
+        }
+        else{
+            res.send("Ungültige Eingabe. Bitte wählen Sie Kapitel und gewünschte Aufgabenart aus.")
+        }
             
-       }
-       else if(aufgabenart.includes("python") && !(aufgabenart.includes("kopfrechnen")))
-       {
-            rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ') AND python == True').all();
-       }
-       else
-       {
-            rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ') AND kopfrechnen == True').all();  
-       }
-
-       let finalRows = []
-       
-       for(let i = 0; i < anzahlAufgaben; i++){
         
-            let rand = Math.floor(Math.random()*rows.length);
-            console.log("ROWS",rows)
-            console.log("RANDOM",rand)
-        
-            console.log("ausgewähltes Element: ", rows[rand])
-            finalRows.push(rows[rand])
-            rows.splice(rand,1)
-       }
-       
-       //console.log(rows)
-       res.render("learn", {aufgaben : finalRows});
-   }
-});
+    }
+);
 
 app.post("/auswertung",function(req,res){
     //session lesen

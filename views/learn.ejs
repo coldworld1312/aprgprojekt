@@ -34,7 +34,7 @@
         <form action="/auswertung" method="post">
         <%for(let i = 0; i < aufgaben.length; i++){
             %>
-            <p><%=aufgaben[i].aufgabe%> <br></p>
+            <p>Aufgabe <%=i+1%>: <%=aufgaben[i].aufgabe%> <br></p>
             <input type="text" name="benutzerAntwort_<%=i%>">
             <input type="hidden" name="aufgabe_id_<%=i%>" value="<%=aufgaben[i].id%>">
 
@@ -43,6 +43,11 @@
             %>
             <input type="hidden" name="anzahlAufgaben" value="<%=aufgaben.length%>">
             <button type="submit">Abgeben</button>
+        </form>
+
+        <form action="/select" method="post">
+            <button type="submit">Test abbrechen</button>
+
         </form>
     </body>
  
