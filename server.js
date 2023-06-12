@@ -208,7 +208,7 @@ app.post("/learn", function (req, res) {
             return art + " = 1";
           }).join(" OR ") + ")";
         }
-  
+  //irgendwas
         sql += " ORDER BY RANDOM() LIMIT " + anzahlAufgaben;
         
         //console.log(sql)
