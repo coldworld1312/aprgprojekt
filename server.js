@@ -150,6 +150,7 @@ app.post("/learn",function(req,res){
                 {
                         rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ') AND python == True').all();
                 }
+                
                 else
                 {
                         rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ') AND kopfrechnen == True').all();  
