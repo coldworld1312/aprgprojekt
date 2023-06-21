@@ -1,4 +1,4 @@
 # aprgprojekt
-Ida Jenner
-Gina Renoldi
-Lion Isele
+Ida Jenner,
+Gina Renoldi,
+Lion Isele (Team C)
