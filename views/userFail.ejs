@@ -2,12 +2,18 @@
 <html>
     <head>
         <title>Fail</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <h1>Anmeldung Fehlgeschlagen</h1>
-        <p>die Passwörter stimmen nicht Überein</p>
+        <nav>
+            <img src="logo_aprg.png" id="logo" class="logo" alt="Logo">
+        </nav>
+        <div class="main">
+        <h1>Registrierung fehlgeschlagen</h1>
+        <p>Der Benutzername existiert bereits.</p>
         <form action="/home" method="post">
-            <button type="submit">home</button>
+            <button type="submit" id="main-buttons">Zurück</button>
         </form>
+        </div>
     </body>
 </html>

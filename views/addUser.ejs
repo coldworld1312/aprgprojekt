@@ -1,14 +1,26 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title></title>
+        <title>Registrieren</title>
     </head>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <body>
-        <h1>Neuen Nutzer hinzufügen</h1>
+        <nav>
+            <a href="/home">
+                <img src="logo_aprg.png" id="logo" class="logo" alt="Logo">
+              </a>
+            
+        </nav>
+        <div class="main">
+        <h2>Bitte geben Sie einen Benutzernamen und ein Passwort ein:</h2>
         <form action="/newUser" method="post">
-            Username: <input type="text" name="username" placeholder="coldworld1312" required ><br>
-            passwort: <input type="password" name="userpassword"><br>
-            passwort wiederhohlen: <input type="password" name="repeatedPassword" ><br>
-            <button type="submit">add user</button>
+            Benutzername: <input type="text" name="username" placeholder="coldworld1312" required ><br> <br>
+
+            Passwort: <input type="password" name="userpassword"><br><br>
+            Passwort wiederhohlen: <input type="password" name="repeatedPassword" ><br>
+            <br>
+            <button type="submit" id="main-buttons">Registrieren</button>
+            </form>
+            </div>
     </body>
 </html>

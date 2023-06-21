@@ -1,0 +1,76 @@
+
+nav {
+background-color: #ebeceb; 
+display: flex;
+justify-content: space-between;
+padding: 9px;
+margin-top: 0;
+}
+
+
+
+#logo {
+width: 15%;
+float: left;
+}
+
+.main {
+border-radius: 5px;
+padding: 32px;
+background-color: #cccccd9f;
+height: 420px;
+margin: 48px 32px 48px 32px;
+
+}
+
+body {
+background-color: #efefef;
+}
+
+#main-buttons{
+background-color: #28282c; 
+color: white;
+border: none; 
+padding: 7px ;  /* Innenabstand */
+border-radius: 2px; /* Abgerundete Ecken */
+margin-bottom: 20px;
+width: 140px;
+white-space: nowrap; 
+}
+
+#main-buttons:hover {
+    background-color: #3e3e42;
+}
+#logout-button{
+background-color: #28282c; 
+color: white; 
+border: none; 
+padding: 7px 40px; /* Innenabstand */
+border-radius: 2px; /* Abgerundete Ecken */
+float: right; 
+white-space: nowrap;/* umbruch der schrift verhindern*/
+}
+
+#logout-button:hover {
+    background-color: #3e3e42;
+}
+
+input[name="userName"],input[name="userPassword"]{
+border: 0.3px solid rgb(134, 134, 134);
+border-radius: 2px;
+padding: 5px;
+margin-bottom: 16px;
+background-color: #efefef;
+
+}
+h1 {
+font-size: 30px; 
+}
+
+hr {
+border: none;
+height: 1.5px;
+background-color: gray;
+margin: 16px 0;
+width:50%;
+}

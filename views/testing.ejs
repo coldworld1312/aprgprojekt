@@ -1,9 +1,20 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+  </head>
   <body>
+    <nav>
+      <a href="/home">
+        <img src="logo_aprg.png" id="logo" class="logo" alt="Logo">
+      </a>
+      <form action="/logOut" method="post">
+          <button type="submit" id="logout-button">Log out</button>
+      </form>
+  </nav>
     <p>Es gibt eine verborgene Nachricht für Sie. Klicken Sie, um es zu sehen.</p>
     <input id="meinInput">
-    <button onclick="myFunction()">Klicken!</button>
+    <button onclick="myFunction()" id="main-buttons">Klicken!</button>
     <p id="demo"></p>
 
     <script>

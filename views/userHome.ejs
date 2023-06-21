@@ -1,19 +1,27 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Welcome</title>
-    </head>
-    <body>
-        <h1>Welcome</h1>
-        <form action="/select" method="post">
-            <button type="submit">Aufgaben</button>
-        </form>
         
-       
-       
-       
-        <form action="/logOut" method="post">
-            <button type="submit">Log out</button>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+  
+    <body>
+        <nav>
+            <a href="/userHome">
+                <img src="logo_aprg.png" id="logo" class="logo" alt="Logo">
+              </a>
+            <form action="/logOut" method="post">
+                <button type="submit" id="logout-button">Abmelden</button>
+            </form>
+        </nav>
+        <div class="main">
+        <h1>Herzlich Willkommen!</h1>
+        <form action="/select" method="post">
+            <button type="submit" id="main-buttons">Neuer Mathe Test</button>
         </form>
+    
+       
+       
+        </div>
     </body>
 </html>

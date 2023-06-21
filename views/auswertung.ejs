@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html>
+    <head>
+    <title>Auswertung</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
     <body>
+        <nav>
+            <a href="/userHome">
+                <img src="logo_aprg.png" id="logo" class="logo" alt="Logo">
+              </a>
+            <form action="/logOut" method="post">
+                <button type="submit" id="logout-button">Abmelden</button>
+            </form>
+        </nav>
+        <div class="main">
         <h1>Auswertung</h1>
         <%
         let richtigeAntworten = 0;
@@ -11,10 +24,10 @@
             %>
 
             <p>Aufgabe <%=i+1%>: <%=aufgaben[i]%> <br>
-            Ihre Antwort:<%=benutzerAntworten[i]%> <br>
+            Ihre Antwort: <%=benutzerAntworten[i]%> <br>
             Ihre Antwort ist <%=richtig[i]%> <br>
             <%if(richtig[i]==="Falsch."){
-                %><p>Die richtige Antwort ist: <%=lösungen[i]%></p>
+                %><p>Die richtige Antwort ist: <%=loesungen[i]%></p>
                 <%
             }
             %>
@@ -27,20 +40,14 @@
         <p>Punkte: <%=richtigeAntworten%>/<%=aufgaben.length%></p>
 
         <form action="/select" method = "post">
-            <button type="submit">Neuer Test</button>
+            <button type="submit"id="main-buttons">Neuer Test</button>
         </form>
 
         <form action="/userHome" method="post"> 
-            <button type="submit">Home</button>
+            <button type="submit" id="main-buttons">Startseite</button>
         </form>
         
-        <form action="/logOut" method="post">
-            <button type="submit">Log out</button>
-        </form>
-
-
-      
-
+        </div>
     </body>      
 </html>
 

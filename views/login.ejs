@@ -2,13 +2,23 @@
 <html>
     <head>
         <title>login</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <h1>Login</h1>
+        <nav>
+            <a href="/home">
+                <img src="logo_aprg.png" id="logo" class="logo" alt="Logo">
+              </a>
+            
+        </nav>
+        <div class="main">
+        <h2>Bitte geben Sie Ihren Benutzernamen und Passwort ein:</h2>
+
         <form action="/logintry" method="post">
             Name: <input type="text" name="userName"><br>
             Passwort: <input type="password" name="userPassword"><br>
-            <button type="submit">log in</button>
+            <button type="submit" id="main-buttons">Anmelden</button>
         </form>
+        </div>
     </body>
 </html>

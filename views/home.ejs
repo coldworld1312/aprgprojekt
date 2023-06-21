@@ -1,16 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Home</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        
+        <title>MS MATHE Aufgabenliste</title>
     </head>
+
     <body>
-        <h1>Home</h1>
+        <nav>
+            <img src="logo_aprg.png" id="logo" class="logo" alt="Logo">
+        </nav>
+        <div class="main">
+        <h2>Bitte melden Sie sich an:</h2>
+
         <form action="/login" method="post">
-            <button type="submit">login</button>
+            <button type="submit" id="main-buttons">Anmelden</button>
         </form>
         <form action="/addUser" method="post">
-            <button type="submit">new user</button>
+            <button type="submit"id="main-buttons">Neuer Benutzer</button>
             
         </form>
+        </div>
     </body>
 </html>

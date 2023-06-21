@@ -1,15 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Login Fehlgeschlagen</title>
+        <title>Anmelden fehlgeschlagen</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <h1>Login Fehlgeschlagen</h1>
+        <nav>
+            <img src="logo_aprg.png" id="logo" class="logo" alt="Logo">
+        </nav>
+        <div class="main">
+        <h2>Anmelden fehlgeschlagen: Benutzername oder Passwort sind nicht korrekt.</h2>
         <form action="/home" method="post">
-            <button type="submit">Home</button>
+            <button type="submit" id="main-buttons">Zurück</button>
         </form>
         <form action="/login" method="post">
-            <button type="submit">Login</button>
+            <button type="submit" id="main-buttons">Anmelden</button>
         </form>
+        </div>
     </body>
 </html>

@@ -1,36 +1,18 @@
-<!-- <!DOCTYPE html>
-<html>
-    <body>
-    <h1>testinggggg</h1>
-        <p>
-            
-            <form action="/auswertung" method="post">
-                <%const lösungenListe = []%>
-                <%for(let i = 0; i < aufgaben.length; i++){
-                lösungenListe.push(aufgaben[i].lösung)
-                }
-                %> 
-                <%for(let i = 0; i < aufgaben.length; i++){
-                    %>
-                <p><%=aufgaben[i].aufgabe%> <br></p>
-                <p><%=aufgaben[i].lösung%> <br></p>
-                
-                <input type="text" id="<%=i%>" name="antwort">
-                <%
-            }
-            %>
-            <br>
-            
-            <button type="submit">Abschicken</button>
-            </form>
-        </p>
-    </body>
-  
-    
-</html>
--->
+
 <!DOCTYPE html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
     <body>
+        <nav>
+            <a href="/userHome">
+                <img src="logo_aprg.png" id="logo" class="logo" alt="Logo">
+              </a>
+            <form action="/logOut" method="post">
+                <button type="submit" id="logout-button">Abmelden</button>
+            </form>
+        </nav>
+        <div class="main">
         <form action="/auswertung" method="post">
         <%for(let i = 0; i < aufgaben.length; i++){
             %>
@@ -41,14 +23,16 @@
             <%
             }
             %>
-            <input type="hidden" name="anzahlAufgaben" value="<%=aufgaben.length%>">
-            <button type="submit">Abgeben</button>
+            <br>
+            <input type="hidden" name="anzahlAufgaben" value="<%=aufgaben.length%>"><br>
+            <button type="submit"id="main-buttons">Abgeben</button>
         </form>
 
         <form action="/select" method="post">
-            <button type="submit">Test abbrechen</button>
+            <button type="submit"id="main-buttons">Test abbrechen</button>
 
         </form>
+    </div>
     </body>
  
    

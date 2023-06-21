@@ -1,12 +1,20 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>session nicht gesetzt</title>
+        <title>Session nicht gesetzt</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <h1>Bitte melden sie sich erneut an</h1>
+        <nav>
+            <a href="/home">
+                <img src="logo_aprg.png" id="logo" class="logo" alt="Logo">
+              </a>
+        </nav>
+        <div class="main">
+        <h1>Bitte melden Sie sich erneut an</h1>
         <form action="/login" method="post">
-            <button type="submit">login</button>
+            <button type="submit" id="main-buttons">Anmelden</button>
         </form>
+        </div>
     </body>
 </html>

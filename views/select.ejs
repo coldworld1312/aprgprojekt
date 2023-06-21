@@ -1,39 +1,58 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Please Select</title>
+        <title>Aufgabenauswahl</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
     </head>
+    
     <body>
-        <h1>Bitte Wählen sie</h1>
+        <nav>
+            <a href="/userHome">
+                <img src="logo_aprg.png" id="logo" class="logo" alt="Logo">
+              </a>
+            <form action="/logOut" method="post">
+                <button type="submit" id="logout-button">Abmelden</button>
+            </form>
+        </nav>
+        <div class="main">
+        <h1>Bitte Wählen Sie:</h1>
         <form action="/learn" method="post">
+            <hr/>
             Anzahl der Aufgaben: <select id="anzahlAufgaben" name="anzahlAufgaben">
             <option value="1">1</option><br>
             <option value="2">2</option><br>
             
             </select>
-            <br>
-            Kapitel: <br>
+            <hr/>
+
+           Kapitel:
+           <br>
             <input type="checkbox" id="1" name="kapitel" value=1>
             <label for="1">1</label>
+            <br>
             <input type="checkbox" id="2" name="kapitel" value=2>
             <label for="2">2</label>
+            <br>
             <input type="checkbox" id="3" name="kapitel" value=3>
             <label for="3">3</label>
+            <br>
             <input type="checkbox" id="4" name="kapitel" value=4>
-            <label for="4">4</label><br>
+            <label for="4">4</label>
+            <br>
 
-        
-            Art: <input type="checkbox" id="python" name="aufgabenart" value="python">
-            <label for="python">python</label>
+            <hr/>
+            Art: <br><input type="checkbox" id="python" name="aufgabenart" value="python">
+            
+            <label for="python">Python</label>
             <input type="checkbox" id="kopfrechnen" name="aufgabenart" value="kopfrechnen">
-            <label for="kopfrechnen">kopfrechnen</label>
-
-            <button type="submit">Test starten</button>
+            <label for="kopfrechnen">Kopfrechnen</label>
+            <br>
+            <br>
+            <button type="submit" id="main-buttons">Test starten</button>
         </form>
         
         
-        <form action="/logOut" method="post">
-            <button type="submit">Log out</button>
-        </form>
+    
+        </div>
     </body>
 </html>

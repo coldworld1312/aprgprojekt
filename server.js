@@ -35,24 +35,26 @@ app.listen(666,function(){
     console.log("listenin on 666");
 });
 
+
+// Statisches Dateiverzeichnis einrichten
+app.use(express.static('images'));
+app.use(express.static('style'));
+app.use(express.static('views'));
+app.use(express.static(__dirname + "/images"));
+
 //home
 app.get("/home",function(req,res){
     let counter = parseInt(req.cookies['counter']) || 0;
     const maxAge = 3600*1000; // one hour 
     res.cookie('counter' , counter + 1, {'maxAge': maxAge});
     res.render("home");
-    //console.log(counter)
+    
 })
-
-app.get("/testing",function(req,res){
-    res.render("testing")
-});
 
 //login
 app.post("/login",function(req,res){
     res.render("login");
 });
-
 
 //logintry
 app.post("/logintry",function(req,res){
@@ -62,7 +64,7 @@ app.post("/logintry",function(req,res){
     const sessionName = req.body["userName"]
 
 if (rows.length === 0) {
-    res.render("login")
+    res.render("loginFail")
 } 
 else {
   const hash = rows[0].userpassword;
@@ -83,11 +85,12 @@ else {
   
   } 
   if(check==false){
+    
     res.render("loginFail")
   }
-}
-       
+}     
 });
+
 
 //select
 app.post("/select",function(req,res){
@@ -113,13 +116,24 @@ else{
 }
 );
 
+app.get("/userHome", function(req,res){
+    if (!req.session.sessionValue){
+    //session nicht gesetzt
+    res.render("sessionFail")
+}
+
+else{
+    res.render("userHome");
+}}
+);
+
 //learn
 app.post("/learn",function(req,res){
     
     const listeKapitel = req.body["kapitel"];
     const aufgabenart = req.body["aufgabenart"];
     const anzahlAufgaben = req.body["anzahlAufgaben"]
-    console.log(anzahlAufgaben)
+   
 
     if(listeKapitel != null && aufgabenart != null){
         let listeKapitelInt = []
@@ -135,11 +149,10 @@ app.post("/learn",function(req,res){
         }
     
         else{
-        
         let liste = listeKapitelInt.toString();
-        console.log("KAPITELLISTE",liste)
-
+        
         let rows = null;
+        //Auswahl aller Aufgaben, die den ausgewählten Kriterien entsprechen
         
         
                 if(aufgabenart.includes("python") && aufgabenart.includes("kopfrechnen"))  
@@ -150,7 +163,6 @@ app.post("/learn",function(req,res){
                 {
                         rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ') AND python == True').all();
                 }
-                
                 else
                 {
                         rows = db.prepare('SELECT * FROM aufgaben WHERE kapitel in (' + liste + ') AND kopfrechnen == True').all();  
@@ -158,26 +170,21 @@ app.post("/learn",function(req,res){
 
                 let finalRows = []
                 
+                //zufällige Auswahl aus möglichen Aufgaben
                 for(let i = 0; i < anzahlAufgaben; i++){
                     
                         let rand = Math.floor(Math.random()*rows.length);
-                        console.log("ROWS",rows)
-                        console.log("RANDOM",rand)
-                    
-                        console.log("ausgewähltes Element: ", rows[rand])
+                        
                         finalRows.push(rows[rand])
                         rows.splice(rand,1)
                 }
                 
-                //console.log(rows)
                 res.render("learn", {aufgaben : finalRows});
             }
         }
         else{
             res.send("Ungültige Eingabe. Bitte wählen Sie Kapitel und gewünschte Aufgabenart aus.")
-        }
-            
-        
+        }   
     }
 );
 
@@ -188,51 +195,45 @@ app.post("/auswertung",function(req,res){
        res.render("sessionFail")
    }
    else{
-       //sesion gesetzt
+       //session gesetzt
        
        const anzahlAufgaben = req.body["anzahlAufgaben"]
        const aufgabenListe = []
        const benutzerAntwortenListe = []
-       const lösungenListe = []
+       const loesungenListe = []
        const richtigListe = []
 
        for(let i = 0; i < anzahlAufgaben; i++){
+        //Auswahl der Aufgaben anhand Aufgaben ID aus math.db
             const aufgaben_id = req.body["aufgabe_id_"+i]
-            console.log(aufgaben_id)
-
+            
             const aufgabenzeile = db.prepare('select * from aufgaben where id='+aufgaben_id).all()[0]
-            
-            console.log(aufgabenzeile)
-            console.log(aufgabenzeile.kopfrechnen)
-            
 
             if(aufgabenzeile == null){
                 console.log("unexpected error, aufgabe id does not exist")
                 continue
             }
+            //Abgleich der eingegeben Antworten mit richtigen Antworten aus Datenbank
             const benutzerAntwort = req.body["benutzerAntwort_"+i]
             aufgabenListe.push(aufgabenzeile.aufgabe)
             benutzerAntwortenListe .push(benutzerAntwort)
             
-            lösungenListe.push(aufgabenzeile.lösung)
+            loesungenListe.push(aufgabenzeile.loesung)
 
-            if(aufgabenzeile.lösung == benutzerAntwort)
+            if(aufgabenzeile.loesung == benutzerAntwort)
             {
-                console.log("true")
+                
                 richtigListe.push("Richtig.")
             }
             else{
-                console.log("false")
+                
                 richtigListe.push("Falsch.")
             }
             
        }
-       //übergabe der aufgabe, der richtigen lösung, der benutzerantwort und ob richtig oder falsch
-       res.render("auswertung", {aufgaben : aufgabenListe, lösungen : lösungenListe, benutzerAntworten : benutzerAntwortenListe, richtig : richtigListe});
-
+       //übergabe der aufgabe, der richtigen loesung, der benutzerantwort und ob richtig oder falsch
+       res.render("auswertung", {aufgaben : aufgabenListe, loesungen : loesungenListe, benutzerAntworten : benutzerAntwortenListe, richtig : richtigListe});
    }
-
-
 });
 
 //adduser
@@ -241,32 +242,43 @@ app.post("/addUser",function(req,res){
 });
 
 //add new user
-app.post("/newUser",function(req,res){
-    
-    const username = req.body["username"];
-    const userpassword=req.body["userpassword"];
-    const repeatedPassword=req.body["repeatedPassword"];
-    const right=0;
-    const wrong=0;
-    const rightAnswers=0;
-    const wrongAnswers=0;
-    
-    console.log(username,userpassword,repeatedPassword,right,wrong,rightAnswers,wrongAnswers)
+//add new user
+app.post("/newUser", function(req, res) {
+  const username = req.body["username"];
+  const userpassword = req.body["userpassword"];
+  const repeatedPassword = req.body["repeatedPassword"];
+  const right = 0;
+  const wrong = 0;
+  const rightAnswers = 0;
+  const wrongAnswers = 0;
 
-   if(userpassword==repeatedPassword){
-    const saltRounds = 10;
-    bcrypt.hash(userpassword, saltRounds, function(err, hash) {
-      const info = db.prepare(`INSERT INTO users(username,userpassword,right,wrong,rightAnswers,wrongAnswers)
-      VALUES (?,?,?,?,?,?)`).run(username,hash,right,wrong,rightAnswers,wrongAnswers);
+  console.log(username, userpassword, repeatedPassword, right, wrong, rightAnswers, wrongAnswers);
+
+  // Überprüfung, ob der Benutzername bereits in der Datenbank existiert
+  
+  const params = [username];
+
+    const row = db.prepare('SELECT * FROM users WHERE username = ?').all(username);
+    console.log("ROW", row)
     
-      res.render("home");  
-    }); 
-    }
-    else{
-        res.render("userFail")
-    }
+      if (row.length > 0) {
+        res.render("userFail");
+      } else {
+        if (userpassword === repeatedPassword) {
+          const saltRounds = 10;
+          bcrypt.hash(userpassword, saltRounds, function(err, hash) {
+            const info = db.prepare(`INSERT INTO users(username, userpassword, right, wrong, rightAnswers, wrongAnswers)
+              VALUES (?,?,?,?,?,?)`).run(username, hash, right, wrong, rightAnswers, wrongAnswers);
+
+            res.render("home");
+          });
+        } else {
+          res.render("passwortFail");
+        }
+      }
     
-});
+  });
+
 
 //Logout
 app.post("/logout",function(req,res){
